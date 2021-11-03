@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="SF Connection"
+  DTS:DTSID="{906E1238-803E-48E8-8C61-F0B4075D8819}"
+  DTS:CreationName="SALESFORCE TF">
+  <DTS:PropertyExpression
+    DTS:Name="Password">@[$Project::Password]</DTS:PropertyExpression>
+  <DTS:PropertyExpression
+    DTS:Name="ServerURL">@[$Project::ServerURL] +  @[$Project::SoapEndPoint]</DTS:PropertyExpression>
+  <DTS:PropertyExpression
+    DTS:Name="Username">@[$Project::Username]</DTS:PropertyExpression>
+  <DTS:ObjectData>
+    <TaskFactorySalesForceConnectionManager
+      ConnectionString="Username=data.migration@afl.com.au.gcprod;ServerURL=https://aflgoldcoast.my.salesforce.com/services/Soap/u/47.0;ServiceType=2;Timeout=60;UseProxy=False;ProxyHost=;ProxyUserName=;ProxyDomain=;ProxyPort=0;MessageListToHandle=;ReuseConnectionAcrossAllTasks=True;NumberOfRetries=0;ResponseStatusCodes=;RetryDelay=0;RetryMode=0;"
+      ConnectByProxy="False">
+      <Password
+        Sensitive="1" xmlns="www.microsoft.com/SqlServer/Dts">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAB2qx2ZyA3EWFoPxGgM1xpAAAAAACAAAAAAADZgAAwAAAABAAAADMar2CmkLRjHiK5iAzzC0UAAAAAASAAACgAAAAEAAAALDS5lDm4kuTNH80eF00XnlwAAAAOZmk/xq3fRG2M/k6fRVC7w7dbuVk7wNvdjBC21Rh5iU5O0AYgDRl4EQSsoVyG6OLxP8FrvmoPLpSg3D1YCh9cxgScN63eo1cMQtZkciQ+eXyJHFFvULR5SoQKNhClhaLcarR7rALACIXWfFHLdM9oBQAAACZpP7ykDfTYUiBid3ZezrzCqt8Lw==</Password>
+    </TaskFactorySalesForceConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

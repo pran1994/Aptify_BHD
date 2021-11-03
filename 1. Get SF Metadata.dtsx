@@ -1,0 +1,1702 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/17/2021 11:28:50 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-QLSF9RN"
+  DTS:CreatorName="DESKTOP-QLSF9RN\terry"
+  DTS:DTSID="{C566A046-92C8-4046-9700-95994031259C}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.167"
+  DTS:LocaleID="3081"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="33"
+  DTS:VersionGUID="{CF4FF0D4-E9CC-4E6C-B25D-1C94E365988E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Get Pricebooks"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{0703CAE3-8131-4C4E-8D70-F6C8CAD26D47}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Pricebooks"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Get Pricebooks\Get Pricebook"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="SalesForce.com Source;SentryOne; Task Factory © 2019 SQL Sentry, LLC; http://www.sentryone.com;support@sentryone.com"
+              description="Retrieves data from SalesForce.com objects"
+              name="Get Pricebook"
+              usesDispositions="true"
+              version="11">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of rows returned in each batch from SalesForce.com"
+                  name="BatchSize">500</property>
+                <property
+                  dataType="System.String"
+                  description="The statement used to query data from SalesForce.com"
+                  expressionType="Notify"
+                  name="QueryStatement">SELECT 
+ 	Id, 
+	IsDeleted, 
+	Name, 
+	RecordTypeId, 
+	CreatedDate, 
+	CreatedById, 
+	LastModifiedDate, 
+	LastModifiedById, 
+	SystemModstamp, 
+	LastViewedDate, 
+	LastReferencedDate, 
+	IsActive, 
+	IsArchived, 
+	Description, 
+	IsStandard 
+ FROM 
+	Pricebook2</property>
+                <property
+                  dataType="System.String"
+                  description="The name of the SalesForce.com object"
+                  expressionType="Notify"
+                  name="SalesForceObjectName">Pricebook2</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Include deleted records in source data"
+                  expressionType="Notify"
+                  name="IncludeDeleted">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Set to true if a custom query is being used"
+                  expressionType="Notify"
+                  name="UseQuery">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Set to true if the local dates should be converted to UTC before being used in a where statement"
+                  expressionType="Notify"
+                  name="ConvertDatesToUTC">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="The type of query to execute (Normal or Bulk Query)"
+                  expressionType="Notify"
+                  name="Query Mode"
+                  typeConverter="PW.TaskFactory.SalesForceSource+QueryMode">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="The format in which the dates will be outputted"
+                  expressionType="Notify"
+                  name="Output Date Timezone"
+                  typeConverter="PW.TaskFactory.SalesForceBulkJob+OutputDateTimezone">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds of to wait between polling checks for job status"
+                  name="Bulk Query Polling Interval">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="The concurrency mode for the bulk query job"
+                  expressionType="Notify"
+                  name="Bulk Query Concurrency Mode"
+                  typeConverter="PW.TaskFactory.SalesForceBulkJob+ConcurrencyModeEnum">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Set to true if xml results in columns should be wrapped with a &lt;root&gt; element. This makes it easier to parse in the down flow."
+                  expressionType="Notify"
+                  name="Wrap Xml With Root Element">false</property>
+                <property
+                  dataType="System.Boolean"
+                  expressionType="Notify"
+                  name="DebugMode">false</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">PW.TaskFactory.SalesForceSource</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Get Pricebooks\Get Pricebook.Connections[SALESFORCE]"
+                  connectionManagerID="{906E1238-803E-48E8-8C61-F0B4075D8819}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[SF Connection]"
+                  description="Connection to the SalesForce.com account"
+                  name="SALESFORCE" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data]"
+                  name="SalesForce Data">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[Id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[Id]"
+                      length="18"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[IsDeleted]"
+                      dataType="bool"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[IsDeleted]"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[IsDeleted]"
+                      name="IsDeleted"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[Name]"
+                      length="255"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[RecordTypeId]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[RecordTypeId]"
+                      length="18"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[RecordTypeId]"
+                      name="RecordTypeId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[CreatedDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[CreatedDate]"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[CreatedDate]"
+                      name="CreatedDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[CreatedById]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[CreatedById]"
+                      length="18"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[CreatedById]"
+                      name="CreatedById"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[LastModifiedDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[LastModifiedDate]"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[LastModifiedDate]"
+                      name="LastModifiedDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[LastModifiedById]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[LastModifiedById]"
+                      length="18"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[LastModifiedById]"
+                      name="LastModifiedById"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[SystemModstamp]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[SystemModstamp]"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[SystemModstamp]"
+                      name="SystemModstamp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[LastViewedDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[LastViewedDate]"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[LastViewedDate]"
+                      name="LastViewedDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[LastReferencedDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[LastReferencedDate]"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[LastReferencedDate]"
+                      name="LastReferencedDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[IsActive]"
+                      dataType="bool"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[IsActive]"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[IsActive]"
+                      name="IsActive"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[IsArchived]"
+                      dataType="bool"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[IsArchived]"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[IsArchived]"
+                      name="IsArchived"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[Description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[Description]"
+                      length="255"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[Description]"
+                      name="Description"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[IsStandard]"
+                      dataType="bool"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[IsStandard]"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[IsStandard]"
+                      name="IsStandard"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[Id]"
+                      dataType="wstr"
+                      length="18"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[IsDeleted]"
+                      dataType="bool"
+                      name="IsDeleted" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="255"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[RecordTypeId]"
+                      dataType="wstr"
+                      length="18"
+                      name="RecordTypeId" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[CreatedDate]"
+                      dataType="dbTimeStamp"
+                      name="CreatedDate" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[CreatedById]"
+                      dataType="wstr"
+                      length="18"
+                      name="CreatedById" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[LastModifiedDate]"
+                      dataType="dbTimeStamp"
+                      name="LastModifiedDate" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[LastModifiedById]"
+                      dataType="wstr"
+                      length="18"
+                      name="LastModifiedById" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[SystemModstamp]"
+                      dataType="dbTimeStamp"
+                      name="SystemModstamp" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[LastViewedDate]"
+                      dataType="dbTimeStamp"
+                      name="LastViewedDate" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[LastReferencedDate]"
+                      dataType="dbTimeStamp"
+                      name="LastReferencedDate" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[IsActive]"
+                      dataType="bool"
+                      name="IsActive" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[IsArchived]"
+                      dataType="bool"
+                      name="IsArchived" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      name="Description" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].ExternalColumns[IsStandard]"
+                      dataType="bool"
+                      name="IsStandard" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output]"
+                  isErrorOut="true"
+                  name="SalesForce Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[ErrorDescription]"
+                      dataType="wstr"
+                      length="1024"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[ErrorDescription]"
+                      name="ErrorDescription" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[Id]"
+                      dataType="wstr"
+                      length="18"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[IsDeleted]"
+                      dataType="bool"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[IsDeleted]"
+                      name="IsDeleted" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[Name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[Name]"
+                      name="Name" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[RecordTypeId]"
+                      dataType="wstr"
+                      length="18"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[RecordTypeId]"
+                      name="RecordTypeId" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[CreatedDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[CreatedDate]"
+                      name="CreatedDate" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[CreatedById]"
+                      dataType="wstr"
+                      length="18"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[CreatedById]"
+                      name="CreatedById" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[LastModifiedDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[LastModifiedDate]"
+                      name="LastModifiedDate" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[LastModifiedById]"
+                      dataType="wstr"
+                      length="18"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[LastModifiedById]"
+                      name="LastModifiedById" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[SystemModstamp]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[SystemModstamp]"
+                      name="SystemModstamp" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[LastViewedDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[LastViewedDate]"
+                      name="LastViewedDate" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[LastReferencedDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[LastReferencedDate]"
+                      name="LastReferencedDate" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[IsActive]"
+                      dataType="bool"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[IsActive]"
+                      name="IsActive" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[IsArchived]"
+                      dataType="bool"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[IsArchived]"
+                      name="IsArchived" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[Description]"
+                      name="Description" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[IsStandard]"
+                      dataType="bool"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Error Output].Columns[IsStandard]"
+                      name="IsStandard" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Get Pricebooks\Put Pricebook"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Put Pricebook"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Import_SF_Pricebook2]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Get Pricebooks\Put Pricebook.Connections[OleDbConnection]"
+                  connectionManagerID="{A7A0F764-2D90-419B-99F5-687CF35E94C2}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DBConnection]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Get Pricebooks\Put Pricebook.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Get Pricebooks\Put Pricebook.Inputs[OLE DB Destination Input].Columns[Id]"
+                      cachedDataType="wstr"
+                      cachedLength="18"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Get Pricebooks\Put Pricebook.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Get Pricebooks\Put Pricebook.Inputs[OLE DB Destination Input].Columns[Name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Name"
+                      externalMetadataColumnId="Package\Get Pricebooks\Put Pricebook.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      lineageId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data].Columns[Name]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Put Pricebook.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
+                      dataType="wstr"
+                      length="18"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Get Pricebooks\Put Pricebook.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="255"
+                      name="Name" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Get Pricebooks\Put Pricebook.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Get Pricebooks\Put Pricebook.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Put Pricebook.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Get Pricebooks\Put Pricebook.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Get Pricebooks\Put Pricebook.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Get Pricebooks\Put Pricebook.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Get Pricebooks.Paths[SalesForce Data]"
+              endId="Package\Get Pricebooks\Put Pricebook.Inputs[OLE DB Destination Input]"
+              name="SalesForce Data"
+              startId="Package\Get Pricebooks\Get Pricebook.Outputs[SalesForce Data]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get Record Types"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{5CD545FE-258E-446E-939E-12FB8F3B7130}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Record Types"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Get Record Types\Get RT Type"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="SalesForce.com Source;SentryOne; Task Factory © 2019 SQL Sentry, LLC; http://www.sentryone.com;support@sentryone.com"
+              description="Retrieves data from SalesForce.com objects"
+              name="Get RT Type"
+              usesDispositions="true"
+              version="11">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of rows returned in each batch from SalesForce.com"
+                  name="BatchSize">500</property>
+                <property
+                  dataType="System.String"
+                  description="The statement used to query data from SalesForce.com"
+                  expressionType="Notify"
+                  name="QueryStatement">select Id,Name,sObjectType  from RecordType</property>
+                <property
+                  dataType="System.String"
+                  description="The name of the SalesForce.com object"
+                  expressionType="Notify"
+                  name="SalesForceObjectName">Account</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Include deleted records in source data"
+                  expressionType="Notify"
+                  name="IncludeDeleted">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Set to true if a custom query is being used"
+                  expressionType="Notify"
+                  name="UseQuery">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Set to true if the local dates should be converted to UTC before being used in a where statement"
+                  expressionType="Notify"
+                  name="ConvertDatesToUTC">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="The type of query to execute (Normal or Bulk Query)"
+                  expressionType="Notify"
+                  name="Query Mode"
+                  typeConverter="PW.TaskFactory.SalesForceSource+QueryMode">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The format in which the dates will be outputted"
+                  expressionType="Notify"
+                  name="Output Date Timezone"
+                  typeConverter="PW.TaskFactory.SalesForceBulkJob+OutputDateTimezone">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds of to wait between polling checks for job status"
+                  name="Bulk Query Polling Interval">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="The concurrency mode for the bulk query job"
+                  expressionType="Notify"
+                  name="Bulk Query Concurrency Mode"
+                  typeConverter="PW.TaskFactory.SalesForceBulkJob+ConcurrencyModeEnum">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Set to true if xml results in columns should be wrapped with a &lt;root&gt; element. This makes it easier to parse in the down flow."
+                  expressionType="Notify"
+                  name="Wrap Xml With Root Element">false</property>
+                <property
+                  dataType="System.Boolean"
+                  expressionType="Notify"
+                  name="DebugMode">false</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">PW.TaskFactory.SalesForceSource</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Get Record Types\Get RT Type.Connections[SALESFORCE]"
+                  connectionManagerID="{906E1238-803E-48E8-8C61-F0B4075D8819}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[SF Connection]"
+                  description="Connection to the SalesForce.com account"
+                  name="SALESFORCE" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data]"
+                  name="SalesForce Data">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].Columns[Id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].ExternalColumns[Id]"
+                      length="18"
+                      lineageId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].Columns[Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].ExternalColumns[Name]"
+                      length="80"
+                      lineageId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].Columns[SobjectType]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].ExternalColumns[SobjectType]"
+                      length="40"
+                      lineageId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].Columns[SobjectType]"
+                      name="SobjectType"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].ExternalColumns[Id]"
+                      dataType="wstr"
+                      length="18"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="80"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].ExternalColumns[SobjectType]"
+                      dataType="wstr"
+                      length="40"
+                      name="SobjectType" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Error Output]"
+                  isErrorOut="true"
+                  name="SalesForce Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Error Output].Columns[ErrorDescription]"
+                      dataType="wstr"
+                      length="1024"
+                      lineageId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Error Output].Columns[ErrorDescription]"
+                      name="ErrorDescription" />
+                    <outputColumn
+                      refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Error Output].Columns[Id]"
+                      dataType="wstr"
+                      length="18"
+                      lineageId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Error Output].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Error Output].Columns[Name]"
+                      dataType="wstr"
+                      length="80"
+                      lineageId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Error Output].Columns[Name]"
+                      name="Name" />
+                    <outputColumn
+                      refId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Error Output].Columns[SobjectType]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Error Output].Columns[SobjectType]"
+                      name="SobjectType" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Get Record Types\Put Types"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Put Types"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Import_SF_ID]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Get Record Types\Put Types.Connections[OleDbConnection]"
+                  connectionManagerID="{A7A0F764-2D90-419B-99F5-687CF35E94C2}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DBConnection]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Get Record Types\Put Types.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Get Record Types\Put Types.Inputs[OLE DB Destination Input].Columns[Id]"
+                      cachedDataType="wstr"
+                      cachedLength="18"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Get Record Types\Put Types.Inputs[OLE DB Destination Input].ExternalColumns[id]"
+                      lineageId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Get Record Types\Put Types.Inputs[OLE DB Destination Input].Columns[Name]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="Name"
+                      externalMetadataColumnId="Package\Get Record Types\Put Types.Inputs[OLE DB Destination Input].ExternalColumns[name]"
+                      lineageId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].Columns[Name]" />
+                    <inputColumn
+                      refId="Package\Get Record Types\Put Types.Inputs[OLE DB Destination Input].Columns[SobjectType]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="SobjectType"
+                      externalMetadataColumnId="Package\Get Record Types\Put Types.Inputs[OLE DB Destination Input].ExternalColumns[object]"
+                      lineageId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data].Columns[SobjectType]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Get Record Types\Put Types.Inputs[OLE DB Destination Input].ExternalColumns[object]"
+                      dataType="wstr"
+                      length="255"
+                      name="object" />
+                    <externalMetadataColumn
+                      refId="Package\Get Record Types\Put Types.Inputs[OLE DB Destination Input].ExternalColumns[name]"
+                      dataType="wstr"
+                      length="255"
+                      name="name" />
+                    <externalMetadataColumn
+                      refId="Package\Get Record Types\Put Types.Inputs[OLE DB Destination Input].ExternalColumns[id]"
+                      dataType="wstr"
+                      length="255"
+                      name="id" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Get Record Types\Put Types.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Get Record Types\Put Types.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get Record Types\Put Types.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Get Record Types\Put Types.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Get Record Types\Put Types.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Get Record Types\Put Types.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Get Record Types.Paths[SalesForce Data]"
+              endId="Package\Get Record Types\Put Types.Inputs[OLE DB Destination Input]"
+              name="SalesForce Data"
+              startId="Package\Get Record Types\Get RT Type.Outputs[SalesForce Data]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get SF Users"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{3E01B6A2-3061-4DB6-9AAB-7255F2C43FB9}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get SF Users"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Get SF Users\Get users"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="SalesForce.com Source;SentryOne; Task Factory © 2019 SQL Sentry, LLC; http://www.sentryone.com;support@sentryone.com"
+              description="Retrieves data from SalesForce.com objects"
+              name="Get users"
+              usesDispositions="true"
+              version="11">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of rows returned in each batch from SalesForce.com"
+                  name="BatchSize">500</property>
+                <property
+                  dataType="System.String"
+                  description="The statement used to query data from SalesForce.com"
+                  expressionType="Notify"
+                  name="QueryStatement">SELECT 
+ 	Id, 
+	Username, 
+	Name, 
+	Email, 
+	IsActive, 
+	Profile.name
+ FROM 
+	User</property>
+                <property
+                  dataType="System.String"
+                  description="The name of the SalesForce.com object"
+                  expressionType="Notify"
+                  name="SalesForceObjectName">User</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Include deleted records in source data"
+                  expressionType="Notify"
+                  name="IncludeDeleted">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Set to true if a custom query is being used"
+                  expressionType="Notify"
+                  name="UseQuery">true</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Set to true if the local dates should be converted to UTC before being used in a where statement"
+                  expressionType="Notify"
+                  name="ConvertDatesToUTC">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="The type of query to execute (Normal or Bulk Query)"
+                  expressionType="Notify"
+                  name="Query Mode"
+                  typeConverter="PW.TaskFactory.SalesForceSource+QueryMode">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="The format in which the dates will be outputted"
+                  expressionType="Notify"
+                  name="Output Date Timezone"
+                  typeConverter="PW.TaskFactory.SalesForceBulkJob+OutputDateTimezone">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds of to wait between polling checks for job status"
+                  name="Bulk Query Polling Interval">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="The concurrency mode for the bulk query job"
+                  expressionType="Notify"
+                  name="Bulk Query Concurrency Mode"
+                  typeConverter="PW.TaskFactory.SalesForceBulkJob+ConcurrencyModeEnum">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Set to true if xml results in columns should be wrapped with a &lt;root&gt; element. This makes it easier to parse in the down flow."
+                  expressionType="Notify"
+                  name="Wrap Xml With Root Element">false</property>
+                <property
+                  dataType="System.Boolean"
+                  expressionType="Notify"
+                  name="DebugMode">false</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">PW.TaskFactory.SalesForceSource</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Get SF Users\Get users.Connections[SALESFORCE]"
+                  connectionManagerID="{906E1238-803E-48E8-8C61-F0B4075D8819}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[SF Connection]"
+                  description="Connection to the SalesForce.com account"
+                  name="SALESFORCE" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Get SF Users\Get users.Outputs[SalesForce Data]"
+                  name="SalesForce Data">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[Id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get SF Users\Get users.Outputs[SalesForce Data].ExternalColumns[Id]"
+                      length="18"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[Username]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get SF Users\Get users.Outputs[SalesForce Data].ExternalColumns[Username]"
+                      length="255"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[Username]"
+                      name="Username"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get SF Users\Get users.Outputs[SalesForce Data].ExternalColumns[Name]"
+                      length="121"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[Email]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get SF Users\Get users.Outputs[SalesForce Data].ExternalColumns[Email]"
+                      length="128"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[Email]"
+                      name="Email"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[IsActive]"
+                      dataType="bool"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get SF Users\Get users.Outputs[SalesForce Data].ExternalColumns[IsActive]"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[IsActive]"
+                      name="IsActive"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[profile.name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="SalesForce"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Get SF Users\Get users.Outputs[SalesForce Data].ExternalColumns[profile.name]"
+                      length="255"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[profile.name]"
+                      name="profile.name"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Data].ExternalColumns[Id]"
+                      dataType="wstr"
+                      length="18"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Data].ExternalColumns[Username]"
+                      dataType="wstr"
+                      length="255"
+                      name="Username" />
+                    <externalMetadataColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Data].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="121"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Data].ExternalColumns[Email]"
+                      dataType="wstr"
+                      length="128"
+                      name="Email" />
+                    <externalMetadataColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Data].ExternalColumns[IsActive]"
+                      dataType="bool"
+                      name="IsActive" />
+                    <externalMetadataColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Data].ExternalColumns[profile.name]"
+                      dataType="wstr"
+                      length="255"
+                      name="profile.name" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output]"
+                  isErrorOut="true"
+                  name="SalesForce Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[ErrorDescription]"
+                      dataType="wstr"
+                      length="1024"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[ErrorDescription]"
+                      name="ErrorDescription" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[Id]"
+                      dataType="wstr"
+                      length="18"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[Username]"
+                      dataType="wstr"
+                      length="80"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[Username]"
+                      name="Username" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[Name]"
+                      dataType="wstr"
+                      length="121"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[Name]"
+                      name="Name" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[Email]"
+                      dataType="wstr"
+                      length="128"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[Email]"
+                      name="Email" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[IsActive]"
+                      dataType="bool"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[IsActive]"
+                      name="IsActive" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[profile.name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Error Output].Columns[profile.name]"
+                      name="profile.name" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Get SF Users\Put Users"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Put Users"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[Import_SF_Users]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Get SF Users\Put Users.Connections[OleDbConnection]"
+                  connectionManagerID="{A7A0F764-2D90-419B-99F5-687CF35E94C2}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[DBConnection]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].Columns[Id]"
+                      cachedDataType="wstr"
+                      cachedLength="18"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].Columns[Username]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Username"
+                      externalMetadataColumnId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].ExternalColumns[UserName]"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[Username]" />
+                    <inputColumn
+                      refId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].Columns[Name]"
+                      cachedDataType="wstr"
+                      cachedLength="121"
+                      cachedName="Name"
+                      externalMetadataColumnId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[Name]" />
+                    <inputColumn
+                      refId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].Columns[Email]"
+                      cachedDataType="wstr"
+                      cachedLength="128"
+                      cachedName="Email"
+                      externalMetadataColumnId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].ExternalColumns[Email]"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[Email]" />
+                    <inputColumn
+                      refId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].Columns[IsActive]"
+                      cachedDataType="bool"
+                      cachedName="IsActive"
+                      externalMetadataColumnId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].ExternalColumns[IsActive]"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[IsActive]" />
+                    <inputColumn
+                      refId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].Columns[profile.name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="profile.name"
+                      externalMetadataColumnId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].ExternalColumns[ProfileName]"
+                      lineageId="Package\Get SF Users\Get users.Outputs[SalesForce Data].Columns[profile.name]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
+                      dataType="wstr"
+                      length="18"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="255"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].ExternalColumns[UserName]"
+                      dataType="wstr"
+                      length="255"
+                      name="UserName" />
+                    <externalMetadataColumn
+                      refId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].ExternalColumns[Email]"
+                      dataType="wstr"
+                      length="255"
+                      name="Email" />
+                    <externalMetadataColumn
+                      refId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].ExternalColumns[IsActive]"
+                      dataType="wstr"
+                      length="255"
+                      name="IsActive" />
+                    <externalMetadataColumn
+                      refId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input].ExternalColumns[ProfileName]"
+                      dataType="wstr"
+                      length="255"
+                      name="ProfileName" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Get SF Users\Put Users.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Get SF Users\Put Users.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Get SF Users\Put Users.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Get SF Users\Put Users.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Get SF Users\Put Users.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Get SF Users.Paths[SalesForce Data]"
+              endId="Package\Get SF Users\Put Users.Inputs[OLE DB Destination Input]"
+              name="SalesForce Data"
+              startId="Package\Get SF Users\Get users.Outputs[SalesForce Data]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate import sf tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9C11554C-7D32-4B38-B3E9-6666634E8909}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate import sf tables"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A7A0F764-2D90-419B-99F5-687CF35E94C2}"
+          SQLTask:SqlStatementSource="truncate table Import_SF_ID&#xA;truncate table dbo.Import_SF_Users" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{EA4E5DE5-52EA-4249-9B54-BC01068FB8E5}"
+      DTS:From="Package\Truncate import sf tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Get Record Types" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{1CCDCFD3-2B3B-44E8-BF5D-1C9812D67278}"
+      DTS:From="Package\Get Record Types"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Get SF Users" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{F82A0004-E03B-4D87-A29B-433D20E72ECD}"
+      DTS:From="Package\Get SF Users"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Get Pricebooks" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Get Pricebooks"
+          TopLeft="20.5,311.5" />
+        <NodeLayout
+          Size="168,42"
+          Id="Package\Get Record Types"
+          TopLeft="13.5,107.5" />
+        <NodeLayout
+          Size="145,42"
+          Id="Package\Get SF Users"
+          TopLeft="25,209.5" />
+        <NodeLayout
+          Size="184,42"
+          Id="Package\Truncate import sf tables"
+          TopLeft="5.5,5.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="97.5,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="97.5,149.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="97.5,251.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Get Pricebooks">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="147,42"
+          Id="Package\Get Pricebooks\Put Pricebook"
+          TopLeft="6.50000000000001,107.5" />
+        <NodeLayout
+          Size="149,42"
+          Id="Package\Get Pricebooks\Get Pricebook"
+          TopLeft="5.50000000000001,5.5" />
+        <EdgeLayout
+          Id="Package\Get Pricebooks.Paths[SalesForce Data]"
+          TopLeft="80,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Get Pricebooks\Put Pricebook">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Get Record Types">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="128,42"
+          Id="Package\Get Record Types\Put Types"
+          TopLeft="13,209.5" />
+        <NodeLayout
+          Size="142,42"
+          Id="Package\Get Record Types\Get RT Type"
+          TopLeft="6.00000000000001,5.5" />
+        <EdgeLayout
+          Id="Package\Get Record Types.Paths[SalesForce Data]"
+          TopLeft="77,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,162"
+              Start="0,0"
+              End="0,154.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,154.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Get Record Types\Put Types">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Get SF Users">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="127,42"
+          Id="Package\Get SF Users\Put Users"
+          TopLeft="230,231" />
+        <NodeLayout
+          Size="127,42"
+          Id="Package\Get SF Users\Get users"
+          TopLeft="206,112" />
+        <EdgeLayout
+          Id="Package\Get SF Users.Paths[SalesForce Data]"
+          TopLeft="269.5,154">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="24,77"
+              Start="0,0"
+              End="24,69.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34.5"
+                    Point2="0,38.5"
+                    Point3="4,38.5" />
+                  <mssgle:LineSegment
+                    End="20,38.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="20,38.5"
+                    Point2="24,38.5"
+                    Point3="24,42.5" />
+                  <mssgle:LineSegment
+                    End="24,69.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Get SF Users\Put Users">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

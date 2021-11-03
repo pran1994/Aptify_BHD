@@ -1,0 +1,302 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/16/2021 11:48:36 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="CRMSTG01"
+  DTS:CreatorName="AFL\terry.pino"
+  DTS:DTSID="{5FD5FEE5-AFCE-42A7-B2D9-CF476C64BD5D}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.167"
+  DTS:LocaleID="3081"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="18"
+  DTS:VersionGUID="{BFB0A38D-7A43-43BA-B6E2-BB6BFAB9F178}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Test Trim 1"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:Disabled="True"
+      DTS:DTSID="{386EBB24-A62C-4F97-AC60-2DCB78021C61}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Test Trim 1">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Test Trim 1\Trim Account data set (Dev testing)"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{a4df65bd-613d-464c-9b99-04c504cc7707}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Trim Account data set (Dev testing)"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A7A0F764-2D90-419B-99F5-687CF35E94C2}"
+              SQLTask:SqlStatementSource="declare @retainrecords table (&#xA; AptifyId__c nvarchar(255) null,&#xA; ParentId nvarchar(255) null&#xA;)&#xA;&#xA;insert @retainrecords&#xA;select AptifyId__c,ParentId&#xA;from CRMAptifyAFL.Account&#xA;where ParentId &lt;&gt; ''&#xA;&#xA;insert @retainrecords&#xA;select a.AptifyId__c,null&#xA;from CRMAptifyAFL.Account a&#xA;inner join @retainrecords t on&#xA; t.ParentId = a.AptifyId__c&#xA;&#xA;insert @retainrecords(AptifyId__c)&#xA;select top 1000 AptifyId__c from CRMAptifyAFL.Account a&#xA;where RecordTypeId = (select id from Import_SF_ID where object = 'account' and name = 'corporate company')&#xA;and not exists (&#xA; select *&#xA; from @retainrecords t&#xA; where t.AptifyId__c = a.AptifyId__c&#xA;)&#xA;&#xA;insert @retainrecords(AptifyId__c)&#xA;select top 1000 AptifyId__c from CRMAptifyAFL.Account a&#xA;where RecordTypeId  = (select id from Import_SF_ID where object = 'account' and name = 'family group')&#xA;and not exists (&#xA; select *&#xA; from @retainrecords t&#xA; where t.AptifyId__c = a.AptifyId__c&#xA;)&#xA;&#xA;&#xA;&#xA;delete CRMAptifyAFL.Account from CRMAptifyAFL.Account a&#xA;where not exists (&#xA; select *&#xA; from @retainrecords t &#xA; where a.AptifyId__c = t.AptifyId__c&#xA;)&#xA;&#xA;--select * from CRMAptifyAFL.Account" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Test Trim 1\Trim Contact records (DEV)"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{a62b95b0-920b-431e-99b4-e66050486471}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Trim Contact records (DEV)"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A7A0F764-2D90-419B-99F5-687CF35E94C2}"
+              SQLTask:SqlStatementSource="declare @retainrecords table (&#xA; AptifyId__c nvarchar(255) null&#xA;)&#xA;&#xA;insert @retainrecords&#xA;select c.Aptify_Id__c&#xA;from CRMAptifyAFL.Contact c&#xA;inner join CRMAptifyAFL.Account a on&#xA; c.AccountId = a.AptifyId__c&#xA;&#xA;insert @retainrecords&#xA;select c.Aptify_Id__c&#xA;from CRMAptifyAFL.Contact c&#xA;inner join CRMAptifyAFL.Account a on&#xA; 'P:' + c.Aptify_Id__c = a.AptifyId__c&#xA;&#xA;delete CRMAptifyAFL.Contact&#xA;from CRMAptifyAFL.Contact c&#xA;where not exists (&#xA; select *&#xA; from @retainrecords r&#xA; where r.AptifyId__c = c.Aptify_Id__c&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Test Trim 1\Trim Marketing Data(Dev)"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{3bb4cc1a-42d2-44de-bf19-ad520fc39d8a}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Trim Marketing Data(Dev)"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A7A0F764-2D90-419B-99F5-687CF35E94C2}"
+              SQLTask:SqlStatementSource="delete CRMAptifyAFL.Marketing_Preferences__c from CRMAptifyAFL.Marketing_Preferences__c m&#xA;where not exists (&#xA; select *&#xA; from CRMAptifyAFL.Contact c&#xA; where c.Aptify_Id__c = m.Aptify_Id__c&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Test Trim 1.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{A1B2E35D-CB0F-4C31-ABAE-DB48F4A48BA1}"
+          DTS:From="Package\Test Trim 1\Trim Account data set (Dev testing)"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Test Trim 1\Trim Contact records (DEV)" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Test Trim 1.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{38178F3B-706C-430F-9C68-B189434E0E64}"
+          DTS:From="Package\Test Trim 1\Trim Contact records (DEV)"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Test Trim 1\Trim Marketing Data(Dev)" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Test Trim 2 - Opps"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{BEE78EA1-A3F9-49C4-9B32-DEF44E0461DF}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Test Trim 2 - Opps">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Test Trim 2 - Opps\Trim Account and contcts Dev"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{9B778C96-276E-4518-8FAA-AD4F30D06C7A}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Trim Account and contcts Dev"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A7A0F764-2D90-419B-99F5-687CF35E94C2}"
+              SQLTask:SqlStatementSource="--select * from CRMAPTIFY.Opportunity where Contact_Name__c is null&#xA;&#xA;declare @contactToRetain table (&#xA;&#x9;Aptify_Id__c nvarchar(255) null&#xA;)&#xA;&#xA;declare @accountToRetain table (&#xA;&#x9;Aptify_Id__c nvarchar(255) null&#xA;)&#xA;&#xA;insert @contactToRetain&#xA;select distinct c.Aptify_Id__c&#xA;from CRMAPTIFY.Contact c&#xA;inner join CRMAPTIFY.Opportunity o on&#xA;&#x9;c.Aptify_Id__c = o.Contact_Name__c&#xA;&#xA;insert @accountToRetain&#xA;select distinct o.AccountId&#xA;from CRMAPTIFY.Contact c&#xA;inner join CRMAPTIFY.Opportunity o on&#xA;&#x9;c.Aptify_Id__c = o.Contact_Name__c&#xA;where o.AccountId is not null&#xA;&#xA;insert @accountToRetain&#xA;select distinct c.AccountId&#xA;from CRMAPTIFY.Contact c&#xA;inner join CRMAPTIFY.Opportunity o on&#xA;&#x9;c.Aptify_Id__c = o.Contact_Name__c&#xA;where c.AccountId not in (&#xA;&#x9;select Aptify_Id__c from @accountToRetain&#xA;)&#xA;and c.AccountId is not null&#xA;&#xA;insert @accountToRetain&#xA;select distinct a.AptifyId__c&#xA;from CRMAPTIFY.Contact c&#xA;inner join CRMAPTIFY.Account a on&#xA;&#x9;'P:' + c.Aptify_Id__c = a.AptifyId__c&#xA;inner join CRMAPTIFY.Opportunity o on&#xA;&#x9;o.Contact_Name__c = c.Aptify_Id__c&#xA;&#xA;insert @accountToRetain&#xA;select distinct a.ParentId&#xA;from CRMAPTIFY.Account a &#xA;inner join @accountToRetain r on&#xA;&#x9;r.Aptify_Id__c = a.AptifyId__c&#xA;&#xA;----Checks&#xA;--select *&#xA;--from CRMAPTIFY.Opportunity o&#xA;--left join @contactToRetain r on&#xA;--&#x9;o.Contact_Name__c = r.Aptify_Id__c&#xA;--where r.Aptify_Id__c is  null&#xA;&#xA;--select *&#xA;--from CRMAPTIFY.Opportunity o&#xA;--left join @accountToRetain r on&#xA;--&#x9;o.AccountId = r.Aptify_Id__c&#xA;--where r.Aptify_Id__c is  null&#xA;--and o.AccountId is not null&#xA;&#xA;--select *&#xA;--from CRMAPTIFY.Opportunity o&#xA;--inner join @contactToRetain r on&#xA;--&#x9;o.Contact_Name__c = r.Aptify_Id__c&#xA;--inner join CRMAPTIFY.Contact c on&#xA;--&#x9;c.Aptify_Id__c = r.Aptify_Id__c&#xA;--left join @accountToRetain ra on &#xA;--&#x9;ra.Aptify_Id__c = case when isnull(c.AccountId,'') = '' then 'P:' + c.Aptify_Id__c else c.AccountId end&#xA;--where ra.Aptify_Id__c is  null&#xA;&#xA;delete CRMAPTIFY.Account&#xA;from CRMAPTIFY.Account a&#xA;where not exists (&#xA;&#x9;select *&#xA;&#x9;from @accountToRetain r&#xA;&#x9;where r.Aptify_Id__c = a.AptifyId__c&#xA;)&#xA;&#xA;delete CRMAPTIFY.Contact&#xA;from CRMAPTIFY.Contact c&#xA;where not exists (&#xA;&#x9;select *&#xA;&#x9;from @contactToRetain r&#xA;&#x9;where r.Aptify_Id__c = c.Aptify_Id__c&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Test Trim 2 - Opps\Trim Opps Dev"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{FA419E04-ECA4-43E9-80CA-E4D09947F05D}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Trim Opps Dev"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A7A0F764-2D90-419B-99F5-687CF35E94C2}"
+              SQLTask:SqlStatementSource="declare @retainOpps table (&#xA;Aptify_Id__c nvarchar(255)&#xA;)&#xA;&#xA;Insert @retainOpps&#xA;select top 500 Aptify_Id__c&#xA;from CRMAPTIFY.Opportunity&#xA;where StageName = 'closed won'&#xA;&#xA;insert @retainOpps&#xA;select top 500 Aptify_Id__c&#xA;from CRMAPTIFY.Opportunity&#xA;where StageName = 'closed lost'&#xA;&#xA;delete CRMAPTIFY.Opportunity &#xA;from CRMAPTIFY.Opportunity o&#xA;where o.Aptify_Id__c not in (&#xA;&#x9;select Aptify_Id__c from @retainOpps&#xA;)&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Test Trim 2 - Opps.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{9F72D341-9A0A-4BC7-A59A-FE7A9ADB2358}"
+          DTS:From="Package\Test Trim 2 - Opps\Trim Opps Dev"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Test Trim 2 - Opps\Trim Account and contcts Dev" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Trim chargent orders"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C8DD7AB7-9BF5-4CC8-901B-F8E0C331CC2E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Trim chargent orders"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A7A0F764-2D90-419B-99F5-687CF35E94C2}"
+          SQLTask:SqlStatementSource="&#xA;declare @testset table (&#xA;Aptify_Order_Id__c nvarchar(20) null&#xA;)&#xA;&#xA;insert @testset&#xA;select top 6000 Aptify_Order_Id__c from CRMAptify.ChargentOrders__ChargentOrder__c where ChargentOrders__Account__c is not null&#xA;and Contact__c is not null&#xA;union&#xA;select top 5000 Aptify_Order_Id__c from CRMAptify.ChargentOrders__ChargentOrder__c where ChargentOrders__Account__c is null&#xA;and Contact__c is not null&#xA;&#xA;delete&#xA;from CRMAptify.ChargentOrders__ChargentOrder__c&#xA;where Aptify_Order_Id__c not in (&#xA;&#x9;select Aptify_Order_Id__c from @testset&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="251,42"
+          Id="Package\Test Trim 1\Trim Account data set (Dev testing)"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="214,42"
+          Id="Package\Test Trim 1\Trim Contact records (DEV)"
+          TopLeft="24,107.5" />
+        <NodeLayout
+          Size="205,42"
+          Id="Package\Test Trim 1\Trim Marketing Data(Dev)"
+          TopLeft="28.5,209.5" />
+        <EdgeLayout
+          Id="Package\Test Trim 1.PrecedenceConstraints[Constraint]"
+          TopLeft="131,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Test Trim 1.PrecedenceConstraints[Constraint 1]"
+          TopLeft="131,149.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="262,307"
+          Size="262,350"
+          Id="Package\Test Trim 1"
+          TopLeft="5.50000000000006,5.5" />
+        <NodeLayout
+          Size="225,42"
+          Id="Package\Test Trim 2 - Opps\Trim Account and contcts Dev"
+          TopLeft="5.50000000000001,107.5" />
+        <NodeLayout
+          Size="153,42"
+          Id="Package\Test Trim 2 - Opps\Trim Opps Dev"
+          TopLeft="6.50000000000001,5.5" />
+        <EdgeLayout
+          Id="Package\Test Trim 2 - Opps.PrecedenceConstraints[Constraint]"
+          TopLeft="83,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="35,60"
+              Start="0,0"
+              End="35,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,26"
+                    Point2="0,30"
+                    Point3="4,30" />
+                  <mssgle:LineSegment
+                    End="31,30" />
+                  <mssgle:CubicBezierSegment
+                    Point1="31,30"
+                    Point2="35,30"
+                    Point3="35,34" />
+                  <mssgle:LineSegment
+                    End="35,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="236,292"
+          Size="236,335"
+          Id="Package\Test Trim 2 - Opps"
+          TopLeft="328,56.5" />
+        <NodeLayout
+          Size="181,42"
+          Id="Package\Trim chargent orders"
+          TopLeft="748,189" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

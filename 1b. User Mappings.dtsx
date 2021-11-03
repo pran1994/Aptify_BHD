@@ -1,0 +1,64 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/8/2021 5:45:15 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="CRMSTG01"
+  DTS:CreatorName="AFL\terry.pino"
+  DTS:DTSID="{FC5ADF4E-D164-4961-B553-99B71B0D75F3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.167"
+  DTS:LocaleID="3081"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="5"
+  DTS:VersionGUID="{CA75EF3B-AC05-4FBC-835B-407D875F5F46}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Update SF ID for Mapped Aptify users"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9FAF901E-1C9E-42A2-A33A-443DBDD35FBB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update SF ID for Mapped Aptify users"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A7A0F764-2D90-419B-99F5-687CF35E94C2}"
+          SQLTask:SqlStatementSource="update m&#xA;&#x9;set m.SFId = s.Id&#xA;from import.AptifyUserMappings m&#xA;inner join Import_SF_Users s on &#xA;&#x9;m.AssignToEmailAddress = s.Email" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="264,42"
+          Id="Package\Update SF ID for Mapped Aptify users"
+          TopLeft="313,122" />
+        <AnnotationLayout
+          Text="Import user mappings suppled before running this task"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="321,40"
+          Id="7d3eb410-6253-490a-a3a5-24816b0ec9db"
+          TopLeft="284,47" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
